@@ -21,11 +21,12 @@ export function succeed(message: string): void {
 
 export function runCommand(cmd: string, options?: ExecSyncOptions): string {
   try {
-    return execSync(cmd, {
+    const result = execSync(cmd, {
       encoding: "utf-8",
       timeout: 30_000,
       ...options,
-    }).trim()
+    })
+    return (result as string).trim()
   } catch (e: any) {
     if (e.status === 127) {
       fail({
