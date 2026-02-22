@@ -1,0 +1,14 @@
+{
+  "name": "mobile-agent",
+  "version": "1.0.0",
+  "description": "AI agent skill for mobile app automation via Maestro",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}
