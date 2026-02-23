@@ -1,15 +1,27 @@
 {
   "name": "mobile-agent",
   "version": "1.0.0",
-  "description": "AI agent skill for mobile app automation via Maestro",
+  "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",
-  "private": true,
   "type": "module",
+  "bin": {
+    "mobile-agent": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "SKILL.md",
+    "references"
+  ],
   "engines": {
     "node": ">=18"
   },
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "tsup"
+  },
   "devDependencies": {
     "@types/node": "^25.3.0",
-    "tsx": "^4.19.0"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   }
 }
