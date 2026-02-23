@@ -26,6 +26,7 @@ export function runCommand(cmd: string, options?: ExecSyncOptions): string {
     const result = execSync(cmd, {
       encoding: "utf-8",
       timeout: 30_000,
+      maxBuffer: 10 * 1024 * 1024,
       ...options,
     })
     return (result as string).trim()
