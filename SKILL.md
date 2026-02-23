@@ -1,5 +1,5 @@
 ---
-name: mobile-agent
+name: agent-mobile
 description: >
   Automate mobile apps on iOS simulators and Android emulators using
   LLM-guided interactions. Use when the user asks to test, validate,
@@ -14,17 +14,17 @@ metadata:
 compatibility: >
   Requires Node.js >= 18, Maestro CLI installed, and an iOS Simulator
   or Android Emulator running with the target app.
-allowed-tools: Bash(mobile-agent:*)
+allowed-tools: Bash(agent-mobile:*)
 ---
 
-# mobile-agent
+# agent-mobile
 
 Automate any mobile app running in an iOS Simulator or Android Emulator. You interact with apps through accessibility tree snapshots (compact text with element refs) and deterministic actions (tap, type, scroll).
 
 ## Installation
 
 ```bash
-npm install -g mobile-agent
+npm install -g agent-mobile
 ```
 
 ## Prerequisites
@@ -32,7 +32,7 @@ npm install -g mobile-agent
 Before using any command, verify the environment:
 
 ```bash
-mobile-agent setup
+agent-mobile setup
 ```
 
 This checks: Maestro CLI installed, simulator/emulator running, app accessible. If it fails, follow the error suggestions.
@@ -59,7 +59,7 @@ Always follow this loop:
 ### snapshot — Capture UI state
 
 ```bash
-mobile-agent snapshot [--platform ios|android] [--max 50]
+agent-mobile snapshot [--platform ios|android] [--max 50]
 ```
 
 Returns a compact text representation of the screen:
@@ -81,25 +81,25 @@ Each `[ref=mN]` is a unique identifier for that element, valid only for this sna
 ### tap — Tap an element
 
 ```bash
-mobile-agent tap <ref>
+agent-mobile tap <ref>
 ```
 
-Example: `mobile-agent tap m4` taps the "Sign In" button.
+Example: `agent-mobile tap m4` taps the "Sign In" button.
 
 ### type — Type text into a field
 
 ```bash
-mobile-agent type <ref> "<text>"
+agent-mobile type <ref> "<text>"
 ```
 
-Example: `mobile-agent type m2 "user@example.com"` types into the Email field.
+Example: `agent-mobile type m2 "user@example.com"` types into the Email field.
 
 The script taps the field first to focus it, then inputs the text.
 
 ### scroll — Scroll the screen
 
 ```bash
-mobile-agent scroll <direction>
+agent-mobile scroll <direction>
 ```
 
 Directions: `up`, `down`, `left`, `right`. Default: `down`.
@@ -109,7 +109,7 @@ Use scroll when elements aren't visible in the current snapshot.
 ### screenshot — Capture screen image
 
 ```bash
-mobile-agent screenshot [--output path.png]
+agent-mobile screenshot [--output path.png]
 ```
 
 Saves a PNG screenshot. Use for visual verification when text snapshot isn't sufficient.
@@ -117,7 +117,7 @@ Saves a PNG screenshot. Use for visual verification when text snapshot isn't suf
 ### assert — Verify text on screen
 
 ```bash
-mobile-agent assert "<expected text>"
+agent-mobile assert "<expected text>"
 ```
 
 Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
@@ -144,18 +144,18 @@ Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 ## Example Flow: Login Test
 
 ```bash
-mobile-agent setup
+agent-mobile setup
 
-mobile-agent snapshot
+agent-mobile snapshot
 
-mobile-agent type m2 "test@example.com"
+agent-mobile type m2 "test@example.com"
 
-mobile-agent type m3 "password123"
+agent-mobile type m3 "password123"
 
-mobile-agent tap m4
+agent-mobile tap m4
 
-mobile-agent snapshot
-mobile-agent assert "Welcome"
+agent-mobile snapshot
+agent-mobile assert "Welcome"
 ```
 
 See [references/REFERENCE.md](references/REFERENCE.md) for detailed technical documentation.

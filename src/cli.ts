@@ -20,9 +20,9 @@ const commands: Record<string, (args: string[]) => void> = {
 }
 
 if (!command || command === "--help" || command === "-h") {
-  console.log(`mobile-agent - Mobile app automation for AI agents
+  console.log(`agent-mobile - Mobile app automation for AI agents
 
-Usage: mobile-agent <command> [options]
+Usage: agent-mobile <command> [options]
 
 Commands:
   setup                      Check Maestro, platform, and devices
@@ -34,17 +34,17 @@ Commands:
   assert "<text>"            Verify text exists on screen
 
 Examples:
-  mobile-agent snapshot
-  mobile-agent tap m4
-  mobile-agent type m2 "user@example.com"
-  mobile-agent assert "Welcome"`)
+  agent-mobile snapshot
+  agent-mobile tap m4
+  agent-mobile type m2 "user@example.com"
+  agent-mobile assert "Welcome"`)
   process.exit(0)
 }
 
 const handler = commands[command]
 if (!handler) {
   console.error(`Unknown command: ${command}`)
-  console.error(`Run 'mobile-agent --help' for available commands`)
+  console.error(`Run 'agent-mobile --help' for available commands`)
   process.exit(1)
 }
 

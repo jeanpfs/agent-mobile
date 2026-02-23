@@ -9,7 +9,7 @@ export function run(args: string[]) {
     fail({
       code: "MISSING_ARG",
       message: "No text to assert",
-      suggestion: 'Usage: mobile-agent assert "<expected text>"',
+      suggestion: 'Usage: agent-mobile assert "<expected text>"',
     })
   }
 

@@ -1,4 +1,4 @@
-# mobile-agent
+# agent-mobile
 
 AI agent skill for automating mobile apps on iOS simulators and Android emulators via [Maestro](https://maestro.mobile.dev/).
 
@@ -7,7 +7,7 @@ Works with any framework: native iOS/Android, React Native, Flutter, etc.
 ## Installation
 
 ```bash
-npm install -g mobile-agent
+npm install -g agent-mobile
 ```
 
 ## Requirements
@@ -54,13 +54,13 @@ maestro --version
 
 | Command | Description |
 |---------|-------------|
-| `mobile-agent setup` | Check environment (Maestro, devices) |
-| `mobile-agent snapshot` | Capture accessibility tree with refs |
-| `mobile-agent tap <ref>` | Tap element by ref (e.g., `m3`) |
-| `mobile-agent type <ref> "<text>"` | Type text into field by ref |
-| `mobile-agent scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
-| `mobile-agent screenshot` | Save screenshot as PNG |
-| `mobile-agent assert "<text>"` | Verify text exists on screen |
+| `agent-mobile setup` | Check environment (Maestro, devices) |
+| `agent-mobile snapshot` | Capture accessibility tree with refs |
+| `agent-mobile tap <ref>` | Tap element by ref (e.g., `m3`) |
+| `agent-mobile type <ref> "<text>"` | Type text into field by ref |
+| `agent-mobile scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
+| `agent-mobile screenshot` | Save screenshot as PNG |
+| `agent-mobile assert "<text>"` | Verify text exists on screen |
 
 ## Quick Start
 
@@ -79,7 +79,7 @@ emulator -avd <your_avd_name>
 ### 2. Verify environment
 
 ```bash
-mobile-agent setup
+agent-mobile setup
 ```
 
 Expected output:
@@ -93,7 +93,7 @@ Status: READY
 ### 3. Take a snapshot
 
 ```bash
-mobile-agent snapshot
+agent-mobile snapshot
 ```
 
 Output:
@@ -110,16 +110,16 @@ Screen: (7 elements)
 ### 4. Interact with elements
 
 ```bash
-mobile-agent type m2 "user@example.com"
-mobile-agent type m3 "password123"
-mobile-agent tap m4
+agent-mobile type m2 "user@example.com"
+agent-mobile type m3 "password123"
+agent-mobile tap m4
 ```
 
 ### 5. Validate result
 
 ```bash
-mobile-agent snapshot
-mobile-agent assert "Welcome"
+agent-mobile snapshot
+agent-mobile assert "Welcome"
 ```
 
 ## How It Works
@@ -146,7 +146,7 @@ Refs are **ephemeral** — valid only for the snapshot that generated them. Alwa
 ## Publishing to skills.sh
 
 ```bash
-npx skills add <your-github-user>/mobile-agent
+npx skills add <your-github-user>/agent-mobile
 ```
 
 ## License
