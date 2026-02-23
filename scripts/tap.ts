@@ -1,33 +1,4 @@
-import { runFlow, fail, succeed, parseArgs, detectPlatform, getHierarchy } from "./utils.js"
-
-interface HierarchyNode {
-  attributes: Record<string, string>
-  children?: HierarchyNode[]
-}
-
-function findElementByRef(node: HierarchyNode, targetRef: number, counter: { value: number }): HierarchyNode | null {
-  const attrs = node.attributes
-  const hasLabel =
-    attrs["text"] || attrs["accessibilityText"] || attrs["accessibilityLabel"] ||
-    attrs["label"] || attrs["content-desc"] || ""
-
-  const visible = attrs["visible"] !== "false" && attrs["enabled"] !== "false"
-  if (!visible) return null
-
-  const role = attrs["clickable"] === "true" || attrs["accessibilityRole"] || attrs["role"] || ""
-  if (hasLabel.trim() && (role || hasLabel.trim())) {
-    counter.value++
-    if (counter.value === targetRef) return node
-  }
-
-  if (node.children) {
-    for (const child of node.children) {
-      const found = findElementByRef(child, targetRef, counter)
-      if (found) return found
-    }
-  }
-  return null
-}
+import { runFlow, fail, succeed, parseArgs, detectPlatform, findCachedByRef } from "./utils.js"
 
 const args = parseArgs(process.argv)
 const refArg = args["_0"]
@@ -40,8 +11,7 @@ if (!refArg) {
   })
 }
 
-const refNum = parseInt(refArg.replace("m", ""), 10)
-if (isNaN(refNum)) {
+if (!/^m\d+$/.test(refArg)) {
   fail({
     code: "INVALID_REF",
     message: `Invalid ref format: ${refArg}`,
@@ -51,27 +21,13 @@ if (isNaN(refNum)) {
 
 detectPlatform()
 
-const rawJson = getHierarchy()
-const tree: HierarchyNode = JSON.parse(rawJson)
-const element = findElementByRef(tree, refNum, { value: 0 })
-
-if (!element) {
-  fail({
-    code: "INVALID_REF",
-    message: `Ref ${refArg} not found in current UI`,
-    suggestion: "UI may have changed. Run snapshot again to get fresh refs.",
-  })
-}
-
-const attrs = element.attributes
-const text = attrs["text"] || attrs["accessibilityText"] || attrs["accessibilityLabel"] || attrs["label"] || attrs["content-desc"] || ""
-const resourceId = attrs["resource-id"] || ""
+const match = findCachedByRef(refArg)
 
 let selector: string
-if (resourceId) {
-  selector = `\n    id: "${resourceId}"`
-} else if (text) {
-  selector = ` "${text}"`
+if (match.resourceId) {
+  selector = `\n    id: "${match.resourceId}"`
+} else if (match.label) {
+  selector = ` "${match.label}"`
 } else {
   fail({
     code: "NO_SELECTOR",
@@ -87,7 +43,7 @@ const flow = `appId: ""
 
 try {
   runFlow(flow)
-  succeed(`Tapped ${refArg} (${text || resourceId})`)
+  succeed(`Tapped ${refArg} (${match.role} "${match.label}")`)
 } catch (e: any) {
   fail({
     code: "TAP_FAILED",

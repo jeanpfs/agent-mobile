@@ -1,7 +1,9 @@
 import { execSync, ExecSyncOptions } from "child_process"
-import { writeFileSync, unlinkSync, mkdtempSync } from "fs"
+import { writeFileSync, readFileSync, unlinkSync, mkdtempSync, existsSync } from "fs"
 import { join } from "path"
 import { tmpdir } from "os"
+
+const SNAPSHOT_CACHE = join(tmpdir(), "mobile-agent-snapshot.json")
 
 export interface MaestroError {
   code: string
@@ -88,6 +90,138 @@ export function getHierarchy(): string {
     })
   }
   return raw.slice(jsonStart)
+}
+
+export interface HierarchyNode {
+  attributes: Record<string, string>
+  children?: HierarchyNode[]
+}
+
+export interface ParsedElement {
+  role: string
+  label: string
+  ref: string
+  depth: number
+  node: HierarchyNode
+}
+
+function normalizeRole(node: HierarchyNode): string | null {
+  const attrs = node.attributes
+  const cls = attrs["className"] || attrs["class"] || ""
+  const clickable = attrs["clickable"] === "true"
+  const accessibilityRole = attrs["accessibilityRole"] || ""
+  const role = attrs["role"] || ""
+
+  if (accessibilityRole === "button" || role === "button" || (clickable && cls.toLowerCase().includes("button"))) return "button"
+  if (accessibilityRole === "link" || role === "link") return "link"
+  if (cls.toLowerCase().includes("edittext") || cls.toLowerCase().includes("textinput") || cls.toLowerCase().includes("textfield") || accessibilityRole === "textbox" || role === "textbox") return "textbox"
+  if (cls.toLowerCase().includes("checkbox") || accessibilityRole === "checkbox" || role === "checkbox") return "checkbox"
+  if (cls.toLowerCase().includes("switch") || accessibilityRole === "switch" || role === "switch") return "switch"
+  if (cls.toLowerCase().includes("image") || accessibilityRole === "image" || role === "image") return "image"
+  if (accessibilityRole === "header" || role === "header") return "header"
+
+  const text = attrs["text"] || attrs["accessibilityText"] || attrs["label"] || ""
+  if (text && clickable) return "button"
+  if (text) return "text"
+
+  return null
+}
+
+function getLabel(node: HierarchyNode): string {
+  const attrs = node.attributes
+  return (
+    attrs["text"] ||
+    attrs["accessibilityText"] ||
+    attrs["accessibilityLabel"] ||
+    attrs["label"] ||
+    attrs["hintText"] ||
+    attrs["placeholder"] ||
+    attrs["content-desc"] ||
+    ""
+  ).trim()
+}
+
+function isVisible(node: HierarchyNode): boolean {
+  const attrs = node.attributes
+  if (attrs["visible"] === "false") return false
+  if (attrs["enabled"] === "false") return false
+  const bounds = attrs["bounds"]
+  if (bounds) {
+    const match = bounds.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/)
+    if (match) {
+      const [, x1, y1, x2, y2] = match.map(Number)
+      if (x2 - x1 <= 0 || y2 - y1 <= 0) return false
+    }
+  }
+  return true
+}
+
+function flattenTree(node: HierarchyNode, depth: number, elements: ParsedElement[], counter: { value: number }): void {
+  if (!isVisible(node)) return
+
+  const role = normalizeRole(node)
+  const label = getLabel(node)
+
+  if (role && label) {
+    counter.value++
+    elements.push({ role, label, ref: `m${counter.value}`, depth, node })
+  }
+
+  if (node.children) {
+    for (const child of node.children) {
+      flattenTree(child, depth + 1, elements, counter)
+    }
+  }
+}
+
+export function parseHierarchy(tree: HierarchyNode): ParsedElement[] {
+  const elements: ParsedElement[] = []
+  flattenTree(tree, 0, elements, { value: 0 })
+  return elements
+}
+
+export function findByRef(elements: ParsedElement[], ref: string): ParsedElement | undefined {
+  return elements.find((el) => el.ref === ref)
+}
+
+export function saveSnapshot(elements: ParsedElement[]): void {
+  const data = elements.map(({ role, label, ref, depth, node }) => ({
+    role, label, ref, depth,
+    resourceId: node.attributes["resource-id"] || "",
+  }))
+  writeFileSync(SNAPSHOT_CACHE, JSON.stringify(data), "utf-8")
+}
+
+export interface CachedElement {
+  role: string
+  label: string
+  ref: string
+  depth: number
+  resourceId: string
+}
+
+export function loadSnapshot(): CachedElement[] {
+  if (!existsSync(SNAPSHOT_CACHE)) {
+    fail({
+      code: "NO_SNAPSHOT",
+      message: "No snapshot cache found. Run snapshot first.",
+      suggestion: "npx tsx scripts/snapshot.ts",
+    })
+  }
+  return JSON.parse(readFileSync(SNAPSHOT_CACHE, "utf-8"))
+}
+
+export function findCachedByRef(ref: string): CachedElement {
+  const elements = loadSnapshot()
+  const match = elements.find((el) => el.ref === ref)
+  if (!match) {
+    fail({
+      code: "INVALID_REF",
+      message: `Ref ${ref} not found. Available: ${elements.map((e) => e.ref).join(", ")}`,
+      suggestion: "Run snapshot again to get fresh refs.",
+    })
+  }
+  return match
 }
 
 export function parseArgs(argv: string[]): Record<string, string> {
