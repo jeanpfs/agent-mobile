@@ -1,4 +1,4 @@
-import { runCommand, detectPlatform, fail } from "./utils.js"
+import { runCommand, detectPlatform, fail } from "../utils.js"
 
 function checkMaestro(): string {
   try {
@@ -28,11 +28,13 @@ function listDevices(platform: "ios" | "android"): string[] {
     .map((l) => l.split("\t")[0])
 }
 
-const maestroVersion = checkMaestro()
-const platform = detectPlatform()
-const devices = listDevices(platform)
+export function run(_args: string[]) {
+  const maestroVersion = checkMaestro()
+  const platform = detectPlatform()
+  const devices = listDevices(platform)
 
-console.log(`Maestro: ${maestroVersion}`)
-console.log(`Platform: ${platform}`)
-console.log(`Devices: ${devices.join(", ")}`)
-console.log(`Status: READY`)
+  console.log(`Maestro: ${maestroVersion}`)
+  console.log(`Platform: ${platform}`)
+  console.log(`Devices: ${devices.join(", ")}`)
+  console.log(`Status: READY`)
+}
