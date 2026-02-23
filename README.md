@@ -61,6 +61,8 @@ maestro --version
 | `agent-mobi scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
 | `agent-mobi screenshot` | Save screenshot as PNG |
 | `agent-mobi assert "<text>"` | Verify text exists on screen |
+| `agent-mobi logs start` | Start capturing device logs in background |
+| `agent-mobi logs stop` | Stop capture and display captured logs |
 
 ## Quick Start
 
@@ -129,6 +131,7 @@ agent-mobi assert "Welcome"
 3. Assigns sequential refs (`m1`, `m2`, `m3`...) to interactive elements
 4. **`tap`/`type`** resolve the ref back to the element, generate a temporary Maestro YAML flow, and execute it
 5. **`assert`** scans all visible text in the tree for a match
+6. **`logs start/stop`** runs `adb logcat` (Android) or `xcrun simctl spawn booted log stream` (iOS) in background, captures output to a temp file, and displays it on stop
 
 Refs are **ephemeral** — valid only for the snapshot that generated them. Always re-snapshot after any action.
 
@@ -142,6 +145,8 @@ Refs are **ephemeral** — valid only for the snapshot that generated them. Alwa
 | `TIMEOUT` | Action timed out | Retry or check app state |
 | `TAP_FAILED` | Tap failed | Element may need scroll |
 | `TYPE_FAILED` | Type failed | Check ref is a text input |
+| `LOGS_ALREADY_RUNNING` | Log capture already active | Run `logs stop` first |
+| `LOGS_NOT_RUNNING` | No active log capture | Run `logs start` first |
 
 ## Publishing to skills.sh
 

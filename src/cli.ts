@@ -5,6 +5,7 @@ import { run as type } from "./commands/type.js"
 import { run as scroll } from "./commands/scroll.js"
 import { run as screenshot } from "./commands/screenshot.js"
 import { run as assert } from "./commands/assert.js"
+import { run as logs } from "./commands/logs.js"
 
 const command = process.argv[2]
 const args = process.argv.slice(3)
@@ -17,6 +18,7 @@ const commands: Record<string, (args: string[]) => void> = {
   scroll,
   screenshot,
   assert,
+  logs,
 }
 
 if (!command || command === "--help" || command === "-h") {
@@ -32,6 +34,8 @@ Commands:
   scroll [direction]         Scroll up/down/left/right (default: down)
   screenshot [--output path] Capture screen as PNG
   assert "<text>"            Verify text exists on screen
+  logs start                 Start capturing device logs
+  logs stop                  Stop capture and show logs
 
 Examples:
   agent-mobi snapshot

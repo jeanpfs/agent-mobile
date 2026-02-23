@@ -1,4 +1,4 @@
-# mobile-agent Technical Reference
+# agent-mobi Technical Reference
 
 ## Maestro Hierarchy JSON Format
 
@@ -49,11 +49,39 @@ Refs are assigned sequentially (m1, m2, m3...) by depth-first traversal. They ar
 - Device detection: `xcrun simctl list devices booted`
 - Screenshots: `xcrun simctl io booted screenshot <path>`
 - Hierarchy: `maestro hierarchy` (auto-detects booted simulator)
+- Logs: `xcrun simctl spawn booted log stream --level debug --style compact`
 
 ### Android Emulator
 - Device detection: `adb devices`
 - Screenshots: `adb exec-out screencap -p > <path>`
 - Hierarchy: `maestro hierarchy` (auto-detects connected device)
+- Logs: `adb logcat -v time`
+
+## Device Logs
+
+The `logs` command captures device logs over a time period using platform-native tools.
+
+### How it works
+
+1. `agent-mobi logs start` spawns a detached background process:
+   - **Android:** `adb logcat -v time` — captures all system and app logs with timestamps
+   - **iOS:** `xcrun simctl spawn booted log stream --level debug --style compact` — streams simulator logs
+2. Output is written to `/tmp/agent-mobi-logs.txt`
+3. The process PID is saved to `/tmp/agent-mobi-logs.pid`
+4. `agent-mobi logs stop` sends SIGTERM to the process, reads the log file, and displays the last 200 lines
+
+### Use cases
+
+- **Failed API requests:** Start logs before submitting a form, stop after to see network errors
+- **Crashes:** Capture logs around a navigation that causes a crash
+- **Debug output:** See `console.log` / `NSLog` / `Log.d` output from the app
+- **Auth failures:** Capture token refresh errors or 401 responses
+
+### Limitations
+
+- Logs include ALL device output, not just your app (use grep to filter)
+- On iOS, `log stream` can be verbose — the 200-line limit prevents overwhelming output
+- Only one log capture can run at a time
 
 ## Troubleshooting
 

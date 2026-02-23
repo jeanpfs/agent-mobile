@@ -122,6 +122,24 @@ agent-mobi assert "<expected text>"
 
 Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 
+### logs — Capture device logs
+
+Capture device logs over a time period. Useful for debugging failed requests, crashes, or unexpected behavior.
+
+**Start capturing:**
+```bash
+agent-mobi logs start
+```
+
+**Stop and view captured logs:**
+```bash
+agent-mobi logs stop
+```
+
+The `start` command runs `adb logcat` (Android) or `xcrun simctl spawn booted log stream` (iOS) in the background. The `stop` command kills the capture process and displays the last 200 lines.
+
+**When to use:** Start log capture before performing actions that might fail (form submissions, API calls, navigation). Stop after the action to inspect errors, network failures, or crash traces.
+
 ## Error Codes
 
 | Code | Meaning | What to do |
@@ -132,6 +150,8 @@ Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 | `TIMEOUT` | Action didn't complete in time | Retry or ask user |
 | `TAP_FAILED` | Tap action failed | Element may not be tappable, try scroll |
 | `TYPE_FAILED` | Type action failed | Check ref is a text input |
+| `LOGS_ALREADY_RUNNING` | Log capture already active | Run `logs stop` first |
+| `LOGS_NOT_RUNNING` | No active log capture | Run `logs start` first |
 
 ## Best Practices
 
@@ -140,6 +160,7 @@ Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 3. **Validate after actions** — Use assert or snapshot to confirm results
 4. **Handle missing elements** — If an element isn't visible, scroll first
 5. **Report clearly** — When something fails, show the user the error and current screen state
+6. **Use logs for debugging** — When an action fails unexpectedly, use `logs start` before retrying to capture device logs
 
 ## Example Flow: Login Test
 
@@ -157,5 +178,18 @@ agent-mobi tap m4
 agent-mobi snapshot
 agent-mobi assert "Welcome"
 ```
+
+## Example Flow: Debugging a Failed Action
+
+```bash
+agent-mobi logs start
+
+agent-mobi type m2 "test@example.com"
+agent-mobi tap m4
+
+agent-mobi logs stop
+```
+
+If the tap triggered an API call that failed, the logs will show network errors, server responses, or crash traces from the device.
 
 See [references/REFERENCE.md](references/REFERENCE.md) for detailed technical documentation.
