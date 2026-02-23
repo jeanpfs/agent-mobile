@@ -40,6 +40,7 @@ export function run(args: string[]) {
   const flow = `appId: ""
 ---
 - tapOn:${tapSelector}
+- eraseText: 100
 - inputText: "${text.replace(/"/g, '\\"')}"
 `
 
