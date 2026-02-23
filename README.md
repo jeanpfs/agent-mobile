@@ -4,6 +4,12 @@ AI agent skill for automating mobile apps on iOS simulators and Android emulator
 
 Works with any framework: native iOS/Android, React Native, Flutter, etc.
 
+## Installation
+
+```bash
+npm install -g mobile-agent
+```
+
 ## Requirements
 
 - **Node.js** >= 18
@@ -44,23 +50,17 @@ After configuring, verify:
 maestro --version
 ```
 
-### Install skill dependencies
-
-```bash
-pnpm install
-```
-
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `npx tsx scripts/setup.ts` | Check environment (Maestro, devices) |
-| `npx tsx scripts/snapshot.ts` | Capture accessibility tree with refs |
-| `npx tsx scripts/tap.ts <ref>` | Tap element by ref (e.g., `m3`) |
-| `npx tsx scripts/type.ts <ref> "<text>"` | Type text into field by ref |
-| `npx tsx scripts/scroll.ts <direction>` | Scroll: `up`, `down`, `left`, `right` |
-| `npx tsx scripts/screenshot.ts` | Save screenshot as PNG |
-| `npx tsx scripts/assert.ts "<text>"` | Verify text exists on screen |
+| `mobile-agent setup` | Check environment (Maestro, devices) |
+| `mobile-agent snapshot` | Capture accessibility tree with refs |
+| `mobile-agent tap <ref>` | Tap element by ref (e.g., `m3`) |
+| `mobile-agent type <ref> "<text>"` | Type text into field by ref |
+| `mobile-agent scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
+| `mobile-agent screenshot` | Save screenshot as PNG |
+| `mobile-agent assert "<text>"` | Verify text exists on screen |
 
 ## Quick Start
 
@@ -79,7 +79,7 @@ emulator -avd <your_avd_name>
 ### 2. Verify environment
 
 ```bash
-npx tsx scripts/setup.ts
+mobile-agent setup
 ```
 
 Expected output:
@@ -93,7 +93,7 @@ Status: READY
 ### 3. Take a snapshot
 
 ```bash
-npx tsx scripts/snapshot.ts
+mobile-agent snapshot
 ```
 
 Output:
@@ -110,16 +110,16 @@ Screen: (7 elements)
 ### 4. Interact with elements
 
 ```bash
-npx tsx scripts/type.ts m2 "user@example.com"
-npx tsx scripts/type.ts m3 "password123"
-npx tsx scripts/tap.ts m4
+mobile-agent type m2 "user@example.com"
+mobile-agent type m3 "password123"
+mobile-agent tap m4
 ```
 
 ### 5. Validate result
 
 ```bash
-npx tsx scripts/snapshot.ts
-npx tsx scripts/assert.ts "Welcome"
+mobile-agent snapshot
+mobile-agent assert "Welcome"
 ```
 
 ## How It Works

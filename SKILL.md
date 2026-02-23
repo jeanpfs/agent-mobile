@@ -14,19 +14,25 @@ metadata:
 compatibility: >
   Requires Node.js >= 18, Maestro CLI installed, and an iOS Simulator
   or Android Emulator running with the target app.
-allowed-tools: Bash(npx tsx:*)
+allowed-tools: Bash(mobile-agent:*)
 ---
 
 # mobile-agent
 
 Automate any mobile app running in an iOS Simulator or Android Emulator. You interact with apps through accessibility tree snapshots (compact text with element refs) and deterministic actions (tap, type, scroll).
 
+## Installation
+
+```bash
+npm install -g mobile-agent
+```
+
 ## Prerequisites
 
 Before using any command, verify the environment:
 
 ```bash
-npx tsx scripts/setup.ts
+mobile-agent setup
 ```
 
 This checks: Maestro CLI installed, simulator/emulator running, app accessible. If it fails, follow the error suggestions.
@@ -53,7 +59,7 @@ Always follow this loop:
 ### snapshot — Capture UI state
 
 ```bash
-npx tsx scripts/snapshot.ts [--platform ios|android] [--max 50]
+mobile-agent snapshot [--platform ios|android] [--max 50]
 ```
 
 Returns a compact text representation of the screen:
@@ -75,25 +81,25 @@ Each `[ref=mN]` is a unique identifier for that element, valid only for this sna
 ### tap — Tap an element
 
 ```bash
-npx tsx scripts/tap.ts <ref>
+mobile-agent tap <ref>
 ```
 
-Example: `npx tsx scripts/tap.ts m4` taps the "Sign In" button.
+Example: `mobile-agent tap m4` taps the "Sign In" button.
 
 ### type — Type text into a field
 
 ```bash
-npx tsx scripts/type.ts <ref> "<text>"
+mobile-agent type <ref> "<text>"
 ```
 
-Example: `npx tsx scripts/type.ts m2 "user@example.com"` types into the Email field.
+Example: `mobile-agent type m2 "user@example.com"` types into the Email field.
 
 The script taps the field first to focus it, then inputs the text.
 
 ### scroll — Scroll the screen
 
 ```bash
-npx tsx scripts/scroll.ts <direction>
+mobile-agent scroll <direction>
 ```
 
 Directions: `up`, `down`, `left`, `right`. Default: `down`.
@@ -103,7 +109,7 @@ Use scroll when elements aren't visible in the current snapshot.
 ### screenshot — Capture screen image
 
 ```bash
-npx tsx scripts/screenshot.ts [--output path.png]
+mobile-agent screenshot [--output path.png]
 ```
 
 Saves a PNG screenshot. Use for visual verification when text snapshot isn't sufficient.
@@ -111,7 +117,7 @@ Saves a PNG screenshot. Use for visual verification when text snapshot isn't suf
 ### assert — Verify text on screen
 
 ```bash
-npx tsx scripts/assert.ts "<expected text>"
+mobile-agent assert "<expected text>"
 ```
 
 Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
@@ -138,18 +144,18 @@ Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 ## Example Flow: Login Test
 
 ```bash
-npx tsx scripts/setup.ts
+mobile-agent setup
 
-npx tsx scripts/snapshot.ts
+mobile-agent snapshot
 
-npx tsx scripts/type.ts m2 "test@example.com"
+mobile-agent type m2 "test@example.com"
 
-npx tsx scripts/type.ts m3 "password123"
+mobile-agent type m3 "password123"
 
-npx tsx scripts/tap.ts m4
+mobile-agent tap m4
 
-npx tsx scripts/snapshot.ts
-npx tsx scripts/assert.ts "Welcome"
+mobile-agent snapshot
+mobile-agent assert "Welcome"
 ```
 
 See [references/REFERENCE.md](references/REFERENCE.md) for detailed technical documentation.
