@@ -1,4 +1,4 @@
-import { runCommand, runFlow, fail, succeed, parseArgs, detectPlatform } from "./utils.js"
+import { runFlow, fail, succeed, parseArgs, detectPlatform, getHierarchy } from "./utils.js"
 
 interface HierarchyNode {
   attributes: Record<string, string>
@@ -51,17 +51,7 @@ if (isNaN(refNum)) {
 
 detectPlatform()
 
-let rawJson: string
-try {
-  rawJson = runCommand("maestro hierarchy")
-} catch (e: any) {
-  fail({
-    code: "HIERARCHY_FAILED",
-    message: `Cannot resolve ref: ${e.message}`,
-    suggestion: "Ensure the app is running",
-  })
-}
-
+const rawJson = getHierarchy()
 const tree: HierarchyNode = JSON.parse(rawJson)
 const element = findElementByRef(tree, refNum, { value: 0 })
 

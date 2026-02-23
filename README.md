@@ -12,11 +12,33 @@ Works with any framework: native iOS/Android, React Native, Flutter, etc.
 
 ### Install Maestro
 
+Maestro requires **Java** (JDK 8+).
+
 ```bash
 curl -Ls install.maestro.dev | bash
 ```
 
-After installing, verify:
+The installer adds Maestro to `~/.maestro/bin`. You need to add it to your PATH:
+
+**Fish:**
+```fish
+fish_add_path $HOME/.maestro/bin
+```
+Add to `~/.config/fish/config.fish` to persist.
+
+**Bash:**
+```bash
+export PATH="$PATH:$HOME/.maestro/bin"
+```
+Add to `~/.bashrc` or `~/.bash_profile` to persist.
+
+**Zsh:**
+```bash
+export PATH="$PATH:$HOME/.maestro/bin"
+```
+Add to `~/.zshrc` to persist.
+
+After configuring, verify:
 
 ```bash
 maestro --version

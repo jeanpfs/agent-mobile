@@ -1,4 +1,4 @@
-import { runCommand, fail, parseArgs, detectPlatform } from "./utils.js"
+import { fail, parseArgs, detectPlatform, getHierarchy } from "./utils.js"
 
 interface HierarchyNode {
   attributes: Record<string, string>
@@ -41,17 +41,7 @@ if (!expectedText) {
 
 detectPlatform()
 
-let rawJson: string
-try {
-  rawJson = runCommand("maestro hierarchy")
-} catch (e: any) {
-  fail({
-    code: "HIERARCHY_FAILED",
-    message: `Cannot read UI: ${e.message}`,
-    suggestion: "Ensure the app is running",
-  })
-}
-
+const rawJson = getHierarchy()
 const tree: HierarchyNode = JSON.parse(rawJson)
 const texts: string[] = []
 collectTexts(tree, texts)

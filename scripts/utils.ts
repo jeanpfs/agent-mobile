@@ -68,6 +68,28 @@ export function detectPlatform(): "ios" | "android" {
   })
 }
 
+export function getHierarchy(): string {
+  let raw: string
+  try {
+    raw = runCommand("maestro hierarchy")
+  } catch (e: any) {
+    fail({
+      code: "HIERARCHY_FAILED",
+      message: `Failed to get UI hierarchy: ${e.message}`,
+      suggestion: "Ensure the app is running and responsive in the simulator/emulator",
+    })
+  }
+  const jsonStart = raw.indexOf("{")
+  if (jsonStart === -1) {
+    fail({
+      code: "PARSE_ERROR",
+      message: "No JSON found in Maestro hierarchy output",
+      suggestion: "Try running 'maestro hierarchy' manually to check the output",
+    })
+  }
+  return raw.slice(jsonStart)
+}
+
 export function parseArgs(argv: string[]): Record<string, string> {
   const args: Record<string, string> = {}
   const positional: string[] = []

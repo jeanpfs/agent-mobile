@@ -1,4 +1,4 @@
-import { runCommand, detectPlatform, fail, parseArgs } from "./utils.js"
+import { detectPlatform, fail, parseArgs, getHierarchy } from "./utils.js"
 
 interface HierarchyNode {
   attributes: Record<string, string>
@@ -103,16 +103,7 @@ const args = parseArgs(process.argv)
 if (!args["platform"]) detectPlatform()
 const maxElements = parseInt(args["max"] || "50", 10)
 
-let rawJson: string
-try {
-  rawJson = runCommand("maestro hierarchy")
-} catch (e: any) {
-  fail({
-    code: "HIERARCHY_FAILED",
-    message: `Failed to get UI hierarchy: ${e.message}`,
-    suggestion: "Ensure the app is running and responsive in the simulator/emulator",
-  })
-}
+const rawJson = getHierarchy()
 
 let tree: HierarchyNode
 try {
