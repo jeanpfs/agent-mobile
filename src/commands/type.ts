@@ -9,7 +9,7 @@ export function run(args: string[]) {
     fail({
       code: "MISSING_ARG",
       message: "Missing ref or text",
-      suggestion: 'Usage: agent-mobile type <ref> "<text>" (e.g., m2 "hello@test.com")',
+      suggestion: 'Usage: agent-mobi type <ref> "<text>" (e.g., m2 "hello@test.com")',
     })
   }
 

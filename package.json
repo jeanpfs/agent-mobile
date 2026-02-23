@@ -1,11 +1,11 @@
 {
-  "name": "agent-mobile",
+  "name": "agent-mobi",
   "version": "1.0.0",
   "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "agent-mobile": "./dist/cli.js"
+    "agent-mobi": "./dist/cli.js"
   },
   "files": [
     "dist",
