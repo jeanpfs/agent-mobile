@@ -127,6 +127,7 @@ Start before performing actions that might fail. Stop after to inspect errors, n
 4. **Handle missing elements** — If an element isn't visible, scroll first
 5. **Report clearly** — When something fails, show the user the error and current screen state
 6. **Use logs for debugging** — When an action fails unexpectedly, use `logs start` before retrying to capture device logs
+7. **Stop on input failure** — If `type` or `inputText` fails twice on the same field (custom components, OTP inputs, masked fields), **do not keep retrying or inventing workarounds**. Instead: stop, show the user the text that needs to be entered, and ask them to input it manually. Only continue after the user confirms they are done.
 
 ## Additional resources
 
