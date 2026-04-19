@@ -1,5 +1,10 @@
 # agent-mobi
 
+[![npm version](https://img.shields.io/npm/v/agent-mobi.svg)](https://www.npmjs.com/package/agent-mobi)
+[![CI](https://github.com/jeanpfs/agent-mobi/actions/workflows/ci.yml/badge.svg)](https://github.com/jeanpfs/agent-mobi/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Node >= 18](https://img.shields.io/node/v/agent-mobi.svg)](https://nodejs.org/)
+
 AI agent skill for automating mobile apps on iOS simulators and Android emulators via [Maestro](https://maestro.mobile.dev/).
 
 Works with any framework: native iOS/Android, React Native, Flutter, etc.
@@ -151,7 +156,7 @@ Refs are **ephemeral** — valid only for the snapshot that generated them. Alwa
 ## Publishing to skills.sh
 
 ```bash
-npx skills add <your-github-user>/agent-mobi
+npx skills@latest add jeanpfs/agent-mobi
 ```
 
 ## License

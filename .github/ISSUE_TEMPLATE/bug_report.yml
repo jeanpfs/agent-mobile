@@ -1,0 +1,54 @@
+name: Bug report
+description: Report unexpected behavior in agent-mobi
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug. What did you expect, and what did you get instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Minimal steps (commands, device state) to reproduce the issue.
+      placeholder: |
+        1. Boot iOS Simulator with app X
+        2. Run `agent-mobi snapshot`
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: agent-mobi version
+      description: Output of `agent-mobi --version` or the commit SHA you built from.
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: iOS Simulator 17.4 / Android Emulator API 34
+    validations:
+      required: true
+
+  - type: textarea
+    id: setup
+    attributes:
+      label: Output of `agent-mobi setup`
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Command output / error
+      description: Full output of the failing command.
+      render: shell

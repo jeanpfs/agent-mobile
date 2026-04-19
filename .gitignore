@@ -1,4 +1,22 @@
 node_modules/
 dist/
-*.png
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# Build artifacts / packaging
+*.tgz
+*.log
+coverage/
+
+# OS / editor
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Runtime output
+*.png
+/tmp/

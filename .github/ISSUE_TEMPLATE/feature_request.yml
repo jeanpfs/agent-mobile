@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an enhancement to agent-mobi
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the use case — what are you trying to do with an LLM + mobile app that isn't possible (or is painful) today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would the CLI surface or behavior look like? Keep in mind agent-mobi aims to stay thin over Maestro.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you tried solving this with existing commands, or directly with Maestro?
