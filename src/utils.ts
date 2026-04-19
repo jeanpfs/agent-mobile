@@ -1,5 +1,5 @@
 import { execSync, ExecSyncOptions } from "child_process"
-import { writeFileSync, readFileSync, unlinkSync, mkdtempSync, existsSync } from "fs"
+import { writeFileSync, readFileSync, unlinkSync, mkdtempSync, existsSync, rmSync } from "fs"
 import { join } from "path"
 import { tmpdir } from "os"
 
@@ -50,14 +50,24 @@ export function runFlow(yamlContent: string, device?: string): string {
     const deviceFlag = device ? `--device ${device}` : ""
     return runCommand(`maestro ${deviceFlag} test ${flowPath}`)
   } finally {
-    try { unlinkSync(flowPath) } catch {}
+    try { rmSync(dir, { recursive: true, force: true }) } catch {}
   }
+}
+
+export function escapeYamlString(value: string): string {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r")
+    .replace(/\t/g, "\\t")
 }
 
 export function detectPlatform(): "ios" | "android" {
   try {
     const booted = runCommand("xcrun simctl list devices booted")
-    if (booted.includes("Booted")) return "ios"
+    const hasBooted = booted.split("\n").some((l) => /\(Booted\)\s*$/.test(l))
+    if (hasBooted) return "ios"
   } catch {}
   try {
     const devices = runCommand("adb devices")
@@ -148,7 +158,7 @@ function isVisible(node: HierarchyNode): boolean {
   if (attrs["enabled"] === "false") return false
   const bounds = attrs["bounds"]
   if (bounds) {
-    const match = bounds.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/)
+    const match = bounds.match(/\[(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)\]\[(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)\]/)
     if (match) {
       const [, x1, y1, x2, y2] = match.map(Number)
       if (x2 - x1 <= 0 || y2 - y1 <= 0) return false
@@ -228,7 +238,7 @@ export function findCachedByRef(ref: string): CachedElement {
 export function parseArgs(argv: string[]): Record<string, string> {
   const args: Record<string, string> = {}
   const positional: string[] = []
-  for (let i = 2; i < argv.length; i++) {
+  for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
     if (arg.startsWith("--")) {
       const key = arg.slice(2)

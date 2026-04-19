@@ -1,7 +1,7 @@
-import { runFlow, fail, succeed, parseArgs, detectPlatform, findCachedByRef } from "../utils.js"
+import { runFlow, fail, succeed, parseArgs, detectPlatform, findCachedByRef, escapeYamlString } from "../utils.js"
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
+  const parsed = parseArgs(args)
   const refArg = parsed["_0"]
 
   if (!refArg) {
@@ -25,9 +25,9 @@ export function run(args: string[]) {
 
   let selector: string
   if (match.resourceId) {
-    selector = `\n    id: "${match.resourceId}"`
+    selector = `\n    id: "${escapeYamlString(match.resourceId)}"`
   } else if (match.label) {
-    selector = ` "${match.label}"`
+    selector = ` "${escapeYamlString(match.label)}"`
   } else {
     fail({
       code: "NO_SELECTOR",

@@ -15,8 +15,8 @@ function formatSnapshot(elements: ParsedElement[], maxElements: number): string 
 }
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
-  if (!parsed["platform"]) detectPlatform()
+  const parsed = parseArgs(args)
+  detectPlatform()
   const maxElements = parseInt(parsed["max"] || "50", 10)
 
   const rawJson = getHierarchy()

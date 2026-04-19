@@ -1,10 +1,10 @@
-import { execSync } from "child_process"
+import { execSync, execFileSync } from "child_process"
 import { existsSync, mkdirSync } from "fs"
 import { join, dirname } from "path"
 import { fail, succeed, parseArgs, detectPlatform } from "../utils.js"
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
+  const parsed = parseArgs(args)
   const platform = (parsed["platform"] as "ios" | "android") || detectPlatform()
   const outputPath = parsed["output"] || join(process.cwd(), `screenshot-${Date.now()}.png`)
 
@@ -15,11 +15,18 @@ export function run(args: string[]) {
 
   try {
     if (platform === "ios") {
-      execSync(`xcrun simctl io booted screenshot "${outputPath}"`, {
+      execFileSync("xcrun", ["simctl", "io", "booted", "screenshot", outputPath], {
         encoding: "utf-8",
         timeout: 15_000,
       })
     } else {
+      if (/["`$\\]/.test(outputPath)) {
+        fail({
+          code: "INVALID_PATH",
+          message: "Output path contains unsafe shell characters",
+          suggestion: "Use a path without quotes, backticks, backslashes, or $",
+        })
+      }
       execSync(`adb exec-out screencap -p > "${outputPath}"`, {
         encoding: "utf-8",
         timeout: 15_000,

@@ -4,7 +4,7 @@ const VALID_DIRECTIONS = ["up", "down", "left", "right"] as const
 type Direction = (typeof VALID_DIRECTIONS)[number]
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
+  const parsed = parseArgs(args)
   const direction = (parsed["_0"] || "down").toLowerCase() as Direction
 
   if (!VALID_DIRECTIONS.includes(direction)) {

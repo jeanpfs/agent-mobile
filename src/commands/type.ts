@@ -1,7 +1,7 @@
-import { runFlow, fail, succeed, parseArgs, detectPlatform, findCachedByRef } from "../utils.js"
+import { runFlow, fail, succeed, parseArgs, detectPlatform, findCachedByRef, escapeYamlString } from "../utils.js"
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
+  const parsed = parseArgs(args)
   const refArg = parsed["_0"]
   const text = parsed["_1"]
 
@@ -26,9 +26,9 @@ export function run(args: string[]) {
 
   let tapSelector: string
   if (match.resourceId) {
-    tapSelector = `\n    id: "${match.resourceId}"`
+    tapSelector = `\n    id: "${escapeYamlString(match.resourceId)}"`
   } else if (match.label) {
-    tapSelector = ` "${match.label}"`
+    tapSelector = ` "${escapeYamlString(match.label)}"`
   } else {
     fail({
       code: "NO_SELECTOR",
@@ -41,7 +41,7 @@ export function run(args: string[]) {
 ---
 - tapOn:${tapSelector}
 - eraseText: 100
-- inputText: "${text.replace(/"/g, '\\"')}"
+- inputText: "${escapeYamlString(text)}"
 `
 
   try {

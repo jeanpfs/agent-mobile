@@ -6,6 +6,7 @@ import { run as scroll } from "./commands/scroll.js"
 import { run as screenshot } from "./commands/screenshot.js"
 import { run as assert } from "./commands/assert.js"
 import { run as logs } from "./commands/logs.js"
+import { fail } from "./utils.js"
 
 const command = process.argv[2]
 const args = process.argv.slice(3)
@@ -52,4 +53,12 @@ if (!handler) {
   process.exit(1)
 }
 
-handler(args)
+try {
+  handler(args)
+} catch (e: any) {
+  fail({
+    code: "INTERNAL_ERROR",
+    message: String(e?.message || e),
+    suggestion: "This is an unexpected error. Re-run with the same arguments to reproduce, or report it.",
+  })
+}

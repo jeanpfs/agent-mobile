@@ -1,5 +1,5 @@
 import { spawn } from "child_process"
-import { existsSync, readFileSync, writeFileSync, unlinkSync } from "fs"
+import { existsSync, readFileSync, writeFileSync, unlinkSync, openSync, closeSync } from "fs"
 import { join } from "path"
 import { tmpdir } from "os"
 import { fail, succeed, detectPlatform } from "../utils.js"
@@ -36,15 +36,28 @@ function startLogs() {
     args = ["logcat", "-v", "time"]
   }
 
-  const out = require("fs").openSync(LOGS_FILE, "w")
+  const out = openSync(LOGS_FILE, "w")
   const child = spawn(cmd, args, {
     detached: true,
     stdio: ["ignore", out, out],
   })
 
+  child.on("error", (err) => {
+    try { closeSync(out) } catch {}
+    try { unlinkSync(LOGS_FILE) } catch {}
+    fail({
+      code: "LOGS_SPAWN_FAILED",
+      message: `Failed to start log capture: ${err.message}`,
+      suggestion: platform === "ios"
+        ? "Ensure 'xcrun' is available (install Xcode command line tools)"
+        : "Ensure 'adb' is available (install Android platform-tools)",
+    })
+  })
+
   child.unref()
+  closeSync(out)
   writeFileSync(PID_FILE, String(child.pid), "utf-8")
-  succeed(`Log capture started (${platform}, PID ${child.pid})`)
+  succeed(`Log capture started (${platform}, PID ${child.pid}). Run 'agent-mobi logs stop' to view logs.`)
 }
 
 function stopLogs() {
@@ -61,6 +74,17 @@ function stopLogs() {
   try {
     process.kill(pid, "SIGTERM")
   } catch {}
+
+  const waiter = new Int32Array(new SharedArrayBuffer(4))
+  const deadline = Date.now() + 500
+  while (Date.now() < deadline) {
+    try {
+      process.kill(pid, 0)
+    } catch {
+      break
+    }
+    Atomics.wait(waiter, 0, 0, 50)
+  }
 
   try { unlinkSync(PID_FILE) } catch {}
 

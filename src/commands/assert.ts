@@ -2,7 +2,7 @@ import { fail, parseArgs, detectPlatform, getHierarchy, parseHierarchy } from ".
 import type { HierarchyNode } from "../utils.js"
 
 export function run(args: string[]) {
-  const parsed = parseArgs(["", "", ...args])
+  const parsed = parseArgs(args)
   const expectedText = parsed["_0"]
 
   if (!expectedText) {
