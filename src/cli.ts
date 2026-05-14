@@ -23,9 +23,9 @@ const commands: Record<string, (args: string[]) => void> = {
 }
 
 if (!command || command === "--help" || command === "-h") {
-  console.log(`agent-mobi - Mobile app automation for AI agents
+  console.log(`agent-mobile - Mobile app automation for AI agents
 
-Usage: agent-mobi <command> [options]
+Usage: agent-mobile <command> [options]
 
 Commands:
   setup                      Check Maestro, platform, and devices
@@ -39,17 +39,17 @@ Commands:
   logs stop                  Stop capture and show logs
 
 Examples:
-  agent-mobi snapshot
-  agent-mobi tap m4
-  agent-mobi type m2 "user@example.com"
-  agent-mobi assert "Welcome"`)
+  agent-mobile snapshot
+  agent-mobile tap m4
+  agent-mobile type m2 "user@example.com"
+  agent-mobile assert "Welcome"`)
   process.exit(0)
 }
 
 const handler = commands[command]
 if (!handler) {
   console.error(`Unknown command: ${command}`)
-  console.error(`Run 'agent-mobi --help' for available commands`)
+  console.error(`Run 'agent-mobile --help' for available commands`)
   process.exit(1)
 }
 

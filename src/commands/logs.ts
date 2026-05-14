@@ -4,8 +4,8 @@ import { join } from "path"
 import { tmpdir } from "os"
 import { fail, succeed, detectPlatform } from "../utils.js"
 
-const LOGS_FILE = join(tmpdir(), "agent-mobi-logs.txt")
-const PID_FILE = join(tmpdir(), "agent-mobi-logs.pid")
+const LOGS_FILE = join(tmpdir(), "agent-mobile-logs.txt")
+const PID_FILE = join(tmpdir(), "agent-mobile-logs.pid")
 const MAX_LINES = 200
 
 function startLogs() {
@@ -16,7 +16,7 @@ function startLogs() {
       fail({
         code: "LOGS_ALREADY_RUNNING",
         message: "Log capture is already running",
-        suggestion: "Run 'agent-mobi logs stop' first to get the captured logs",
+        suggestion: "Run 'agent-mobile logs stop' first to get the captured logs",
       })
     } catch {
       try { unlinkSync(PID_FILE) } catch {}
@@ -57,7 +57,7 @@ function startLogs() {
   child.unref()
   closeSync(out)
   writeFileSync(PID_FILE, String(child.pid), "utf-8")
-  succeed(`Log capture started (${platform}, PID ${child.pid}). Run 'agent-mobi logs stop' to view logs.`)
+  succeed(`Log capture started (${platform}, PID ${child.pid}). Run 'agent-mobile logs stop' to view logs.`)
 }
 
 function stopLogs() {
@@ -65,7 +65,7 @@ function stopLogs() {
     fail({
       code: "LOGS_NOT_RUNNING",
       message: "No log capture is running",
-      suggestion: "Run 'agent-mobi logs start' first",
+      suggestion: "Run 'agent-mobile logs start' first",
     })
   }
 
@@ -123,7 +123,7 @@ export function run(args: string[]) {
     fail({
       code: "INVALID_SUBCOMMAND",
       message: `Unknown logs subcommand: ${subcommand || "(none)"}`,
-      suggestion: "Usage: agent-mobi logs start | agent-mobi logs stop",
+      suggestion: "Usage: agent-mobile logs start | agent-mobile logs stop",
     })
   }
 }

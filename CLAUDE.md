@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**agent-mobi** is a mobile app automation CLI for AI agents. It enables LLM-guided interaction with iOS Simulators and Android Emulators via Maestro. The core interface is text-based accessibility tree snapshots with sequential element refs (m1, m2, m3…), avoiding visual/coordinate-based interaction.
+**agent-mobile** is a mobile app automation CLI for AI agents. It enables LLM-guided interaction with iOS Simulators and Android Emulators via Maestro. The core interface is text-based accessibility tree snapshots with sequential element refs (m1, m2, m3…), avoiding visual/coordinate-based interaction.
 
 ## Commands
 
 ```bash
 pnpm build          # Compile TypeScript with tsup → dist/cli.js
-agent-mobi setup    # Verify Maestro, detect platform, list devices
+agent-mobile setup    # Verify Maestro, detect platform, list devices
 ```
 
 No test or lint scripts exist — this CLI requires real devices/simulators to test.
@@ -27,7 +27,7 @@ src/utils.ts         All shared logic: shell execution, Maestro YAML runner, hie
 ```
 
 **Data flow:**
-1. `snapshot` → calls `maestro hierarchy` → parses raw accessibility tree → normalizes roles → assigns sequential refs → caches to `/tmp/agent-mobi-snapshot.json`
+1. `snapshot` → calls `maestro hierarchy` → parses raw accessibility tree → normalizes roles → assigns sequential refs → caches to `/tmp/agent-mobile-snapshot.json`
 2. `tap` / `type` → loads cached snapshot, looks up ref → generates Maestro YAML flow → executes via `maestro test`
 3. `assert` → fetches fresh hierarchy → searches all element labels for text match
 4. `logs` → spawns `xcrun simctl spawn` (iOS) or `adb logcat` (Android) as a background process → saves PID and output path to temp files → displays on `stop`
@@ -36,7 +36,7 @@ src/utils.ts         All shared logic: shell execution, Maestro YAML runner, hie
 - Refs are ephemeral — invalidated after any UI-changing action; always re-snapshot before the next command
 - All actions delegate to Maestro YAML flows (via `runFlow()` in `utils.ts`)
 - Platform detection tries `xcrun` first (iOS), then `adb` (Android)
-- Temp files: `/tmp/agent-mobi-snapshot.json`, `/tmp/agent-mobi-logs.txt`, `/tmp/agent-mobi-*.yaml`
+- Temp files: `/tmp/agent-mobile-snapshot.json`, `/tmp/agent-mobile-logs.txt`, `/tmp/agent-mobile-*.yaml`
 
 ## Error Handling
 

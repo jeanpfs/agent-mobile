@@ -1,4 +1,4 @@
-# agent-mobi Technical Reference
+# agent-mobile Technical Reference
 
 ## Maestro Hierarchy JSON Format
 
@@ -63,12 +63,12 @@ The `logs` command captures device logs over a time period using platform-native
 
 ### How it works
 
-1. `agent-mobi logs start` spawns a detached background process:
+1. `agent-mobile logs start` spawns a detached background process:
    - **Android:** `adb logcat -v time` — captures all system and app logs with timestamps
    - **iOS:** `xcrun simctl spawn booted log stream --level debug --style compact` — streams simulator logs
-2. Output is written to `/tmp/agent-mobi-logs.txt`
-3. The process PID is saved to `/tmp/agent-mobi-logs.pid`
-4. `agent-mobi logs stop` sends SIGTERM to the process, reads the log file, and displays the last 200 lines
+2. Output is written to `/tmp/agent-mobile-logs.txt`
+3. The process PID is saved to `/tmp/agent-mobile-logs.pid`
+4. `agent-mobile logs stop` sends SIGTERM to the process, reads the log file, and displays the last 200 lines
 
 ### Use cases
 
