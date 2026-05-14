@@ -1,9 +1,8 @@
-# agent-mobi
+# agent-mobile
 
-[![npm version](https://img.shields.io/npm/v/agent-mobi.svg)](https://www.npmjs.com/package/agent-mobi)
-[![CI](https://github.com/jeanpfs/agent-mobi/actions/workflows/ci.yml/badge.svg)](https://github.com/jeanpfs/agent-mobi/actions/workflows/ci.yml)
+[![CI](https://github.com/jeanpfs/agent-mobile/actions/workflows/ci.yml/badge.svg)](https://github.com/jeanpfs/agent-mobile/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Node >= 18](https://img.shields.io/node/v/agent-mobi.svg)](https://nodejs.org/)
+[![Node >= 18](https://img.shields.io/badge/node-%3E%3D18-43853d.svg)](https://nodejs.org/)
 
 AI agent skill for automating mobile apps on iOS simulators and Android emulators via [Maestro](https://maestro.mobile.dev/).
 
@@ -11,8 +10,16 @@ Works with any framework: native iOS/Android, React Native, Flutter, etc.
 
 ## Installation
 
+Install the skill with the Vercel Labs skills CLI:
+
 ```bash
-npm install -g agent-mobi
+npx skills@latest add jeanpfs/agent-mobile --all -g
+```
+
+Install the CLI directly from GitHub:
+
+```bash
+npm install -g github:jeanpfs/agent-mobile
 ```
 
 ## Requirements
@@ -59,15 +66,15 @@ maestro --version
 
 | Command | Description |
 |---------|-------------|
-| `agent-mobi setup` | Check environment (Maestro, devices) |
-| `agent-mobi snapshot` | Capture accessibility tree with refs |
-| `agent-mobi tap <ref>` | Tap element by ref (e.g., `m3`) |
-| `agent-mobi type <ref> "<text>"` | Type text into field by ref |
-| `agent-mobi scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
-| `agent-mobi screenshot` | Save screenshot as PNG |
-| `agent-mobi assert "<text>"` | Verify text exists on screen |
-| `agent-mobi logs start` | Start capturing device logs in background |
-| `agent-mobi logs stop` | Stop capture and display captured logs |
+| `agent-mobile setup` | Check environment (Maestro, devices) |
+| `agent-mobile snapshot` | Capture accessibility tree with refs |
+| `agent-mobile tap <ref>` | Tap element by ref (e.g., `m3`) |
+| `agent-mobile type <ref> "<text>"` | Type text into field by ref |
+| `agent-mobile scroll <direction>` | Scroll: `up`, `down`, `left`, `right` |
+| `agent-mobile screenshot` | Save screenshot as PNG |
+| `agent-mobile assert "<text>"` | Verify text exists on screen |
+| `agent-mobile logs start` | Start capturing device logs in background |
+| `agent-mobile logs stop` | Stop capture and display captured logs |
 
 ## Quick Start
 
@@ -86,7 +93,7 @@ emulator -avd <your_avd_name>
 ### 2. Verify environment
 
 ```bash
-agent-mobi setup
+agent-mobile setup
 ```
 
 Expected output:
@@ -100,7 +107,7 @@ Status: READY
 ### 3. Take a snapshot
 
 ```bash
-agent-mobi snapshot
+agent-mobile snapshot
 ```
 
 Output:
@@ -117,16 +124,16 @@ Screen: (7 elements)
 ### 4. Interact with elements
 
 ```bash
-agent-mobi type m2 "user@example.com"
-agent-mobi type m3 "password123"
-agent-mobi tap m4
+agent-mobile type m2 "user@example.com"
+agent-mobile type m3 "password123"
+agent-mobile tap m4
 ```
 
 ### 5. Validate result
 
 ```bash
-agent-mobi snapshot
-agent-mobi assert "Welcome"
+agent-mobile snapshot
+agent-mobile assert "Welcome"
 ```
 
 ## How It Works
@@ -153,10 +160,10 @@ Refs are **ephemeral** — valid only for the snapshot that generated them. Alwa
 | `LOGS_ALREADY_RUNNING` | Log capture already active | Run `logs stop` first |
 | `LOGS_NOT_RUNNING` | No active log capture | Run `logs start` first |
 
-## Publishing to skills.sh
+## Install from skills.sh
 
 ```bash
-npx skills@latest add jeanpfs/agent-mobi
+npx skills@latest add jeanpfs/agent-mobile --all -g
 ```
 
 ## License

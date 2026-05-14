@@ -1,5 +1,5 @@
 ---
-name: agent-mobi
+name: agent-mobile
 description: >
   Automate mobile apps on iOS simulators and Android emulators using
   LLM-guided interactions. Use when the user asks to test, validate,
@@ -8,10 +8,10 @@ description: >
   and any framework. Captures accessibility tree snapshots, taps
   elements, types text, scrolls, and takes screenshots via Maestro.
 argument-hint: "[goal or test description]"
-allowed-tools: Bash(agent-mobi *), Bash(maestro *), Bash(cat *), Bash(xcrun simctl *), Bash(adb *), Bash(curl -Ls install.maestro.dev *)
+allowed-tools: Bash(agent-mobile *), Bash(maestro *), Bash(cat *), Bash(xcrun simctl *), Bash(adb *), Bash(curl -Ls install.maestro.dev *)
 ---
 
-# agent-mobi
+# agent-mobile
 
 Automate any mobile app running in an iOS Simulator or Android Emulator. You interact with apps through accessibility tree snapshots (compact text with element refs) and deterministic actions (tap, type, scroll).
 
@@ -24,10 +24,15 @@ $ARGUMENTS
 Before using any command, verify the environment:
 
 ```bash
-agent-mobi setup
+agent-mobile setup
 ```
 
 This checks: Maestro CLI installed, simulator/emulator running, app accessible. If it fails, follow the error suggestions.
+
+**Install agent-mobile** (if missing):
+```bash
+npm install -g github:jeanpfs/agent-mobile
+```
 
 **Install Maestro** (if missing):
 ```bash
@@ -51,7 +56,7 @@ Always follow this loop:
 ### snapshot — Capture UI state
 
 ```bash
-agent-mobi snapshot [--platform ios|android] [--max 50]
+agent-mobile snapshot [--platform ios|android] [--max 50]
 ```
 
 Returns a compact text representation of the screen:
@@ -71,23 +76,23 @@ Each `[ref=mN]` is a unique identifier for that element, valid only for this sna
 ### tap — Tap an element
 
 ```bash
-agent-mobi tap <ref>
+agent-mobile tap <ref>
 ```
 
-Example: `agent-mobi tap m4` taps the "Sign In" button.
+Example: `agent-mobile tap m4` taps the "Sign In" button.
 
 ### type — Type text into a field
 
 ```bash
-agent-mobi type <ref> "<text>"
+agent-mobile type <ref> "<text>"
 ```
 
-Example: `agent-mobi type m2 "user@example.com"` types into the Email field. The script taps the field first to focus it, then inputs the text.
+Example: `agent-mobile type m2 "user@example.com"` types into the Email field. The script taps the field first to focus it, then inputs the text.
 
 ### scroll — Scroll the screen
 
 ```bash
-agent-mobi scroll <direction>
+agent-mobile scroll <direction>
 ```
 
 Directions: `up`, `down`, `left`, `right`. Default: `down`. Use when elements aren't visible in the current snapshot.
@@ -95,7 +100,7 @@ Directions: `up`, `down`, `left`, `right`. Default: `down`. Use when elements ar
 ### screenshot — Capture screen image
 
 ```bash
-agent-mobi screenshot [--output path.png]
+agent-mobile screenshot [--output path.png]
 ```
 
 Saves a PNG screenshot. Use for visual verification when the text snapshot isn't sufficient.
@@ -103,7 +108,7 @@ Saves a PNG screenshot. Use for visual verification when the text snapshot isn't
 ### assert — Verify text on screen
 
 ```bash
-agent-mobi assert "<expected text>"
+agent-mobile assert "<expected text>"
 ```
 
 Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
@@ -113,8 +118,8 @@ Returns `PASS` if text is found, `FAIL` with visible texts for debugging.
 Capture device logs over a time period. Useful for debugging failed requests, crashes, or unexpected behavior.
 
 ```bash
-agent-mobi logs start
-agent-mobi logs stop
+agent-mobile logs start
+agent-mobile logs stop
 ```
 
 Start before performing actions that might fail. Stop after to inspect errors, network failures, or crash traces.

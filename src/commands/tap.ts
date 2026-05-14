@@ -8,7 +8,7 @@ export function run(args: string[]) {
     fail({
       code: "MISSING_ARG",
       message: "No ref provided",
-      suggestion: "Usage: agent-mobi tap <ref> (e.g., m3)",
+      suggestion: "Usage: agent-mobile tap <ref> (e.g., m3)",
     })
   }
 

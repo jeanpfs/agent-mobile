@@ -1,10 +1,10 @@
-# Contributing to agent-mobi
+# Contributing to agent-mobile
 
-Thanks for your interest in improving agent-mobi.
+Thanks for your interest in improving agent-mobile.
 
 ## Project scope
 
-agent-mobi is a thin, deterministic CLI wrapper over [Maestro](https://maestro.mobile.dev/) for LLM-driven mobile automation. Pull requests that keep the surface small, the output text-friendly for LLMs, and behavior predictable are welcome. Complex features that could live in Maestro itself probably belong there.
+agent-mobile is a thin, deterministic CLI wrapper over [Maestro](https://maestro.mobile.dev/) for LLM-driven mobile automation. Pull requests that keep the surface small, the output text-friendly for LLMs, and behavior predictable are welcome. Complex features that could live in Maestro itself probably belong there.
 
 ## Prerequisites
 
@@ -16,8 +16,8 @@ agent-mobi is a thin, deterministic CLI wrapper over [Maestro](https://maestro.m
 ## Development setup
 
 ```bash
-git clone https://github.com/jeanpfs/agent-mobi.git
-cd agent-mobi
+git clone https://github.com/jeanpfs/agent-mobile.git
+cd agent-mobile
 pnpm install
 pnpm build
 ```
@@ -26,7 +26,7 @@ The built CLI lives at `dist/cli.js`. Link it globally to test changes:
 
 ```bash
 pnpm link --global
-agent-mobi --help
+agent-mobile --help
 ```
 
 After each source change, run `pnpm build` — `tsup` rebuilds in milliseconds and the global link picks it up automatically.
@@ -35,7 +35,7 @@ After each source change, run `pnpm build` — `tsup` rebuilds in milliseconds a
 
 - `src/cli.ts` — dispatches the subcommand to a handler.
 - `src/commands/*.ts` — one file per subcommand (`snapshot`, `tap`, `type`, `scroll`, `screenshot`, `assert`, `logs`, `setup`).
-- `src/utils.ts` — shared: shell execution, Maestro YAML flow runner, hierarchy parsing, ref assignment, snapshot cache (`/tmp/agent-mobi-snapshot.json`), structured error reporting.
+- `src/utils.ts` — shared: shell execution, Maestro YAML flow runner, hierarchy parsing, ref assignment, snapshot cache (`/tmp/agent-mobile-snapshot.json`), structured error reporting.
 
 All user-facing failures must go through `fail({ code, message, suggestion })` — don't throw raw errors. Any text written into generated Maestro YAML must go through `escapeYamlString()`.
 
@@ -57,9 +57,9 @@ All user-facing failures must go through `fail({ code, message, suggestion })` �
 ## Reporting issues
 
 Please include:
-- `agent-mobi --version` (or commit SHA)
+- `agent-mobile --version` (or commit SHA)
 - Platform (iOS Simulator / Android Emulator), device name, OS version
-- Output of `agent-mobi setup`
+- Output of `agent-mobile setup`
 - The exact command you ran and the full error output
 - Minimal reproduction steps
 

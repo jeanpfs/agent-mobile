@@ -3,7 +3,7 @@ import { writeFileSync, readFileSync, unlinkSync, mkdtempSync, existsSync, rmSyn
 import { join } from "path"
 import { tmpdir } from "os"
 
-const SNAPSHOT_CACHE = join(tmpdir(), "agent-mobi-snapshot.json")
+const SNAPSHOT_CACHE = join(tmpdir(), "agent-mobile-snapshot.json")
 
 export interface MaestroError {
   code: string
@@ -43,7 +43,7 @@ export function runCommand(cmd: string, options?: ExecSyncOptions): string {
 }
 
 export function runFlow(yamlContent: string, device?: string): string {
-  const dir = mkdtempSync(join(tmpdir(), "agent-mobi-"))
+  const dir = mkdtempSync(join(tmpdir(), "agent-mobile-"))
   const flowPath = join(dir, "flow.yaml")
   writeFileSync(flowPath, yamlContent, "utf-8")
   try {
@@ -216,7 +216,7 @@ export function loadSnapshot(): CachedElement[] {
     fail({
       code: "NO_SNAPSHOT",
       message: "No snapshot cache found. Run snapshot first.",
-      suggestion: "agent-mobi snapshot",
+      suggestion: "agent-mobile snapshot",
     })
   }
   return JSON.parse(readFileSync(SNAPSHOT_CACHE, "utf-8"))

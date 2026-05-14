@@ -1,16 +1,16 @@
 {
-  "name": "agent-mobi",
+  "name": "@jeanpfs/agent-mobile",
   "version": "1.0.0",
   "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",
   "author": "Jean Pierre <jean.pfs2@gmail.com>",
-  "homepage": "https://github.com/jeanpfs/agent-mobi#readme",
+  "homepage": "https://github.com/jeanpfs/agent-mobile#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeanpfs/agent-mobi.git"
+    "url": "git+https://github.com/jeanpfs/agent-mobile.git"
   },
   "bugs": {
-    "url": "https://github.com/jeanpfs/agent-mobi/issues"
+    "url": "https://github.com/jeanpfs/agent-mobile/issues"
   },
   "keywords": [
     "ai",
@@ -33,7 +33,7 @@
   ],
   "type": "module",
   "bin": {
-    "agent-mobi": "./dist/cli.js"
+    "agent-mobile": "./dist/cli.js"
   },
   "files": [
     "dist",
@@ -49,6 +49,7 @@
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
+    "prepare": "tsup",
     "prepublishOnly": "tsup"
   },
   "devDependencies": {
