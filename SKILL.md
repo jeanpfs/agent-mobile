@@ -1,14 +1,6 @@
 ---
 name: agent-mobile
-description: >
-  Automate mobile apps on iOS simulators and Android emulators using
-  LLM-guided interactions. Use when the user asks to test, validate,
-  interact with, or automate any mobile app running in a simulator
-  or emulator. Works with native iOS, Android, React Native, Flutter,
-  and any framework. Captures accessibility tree snapshots, taps
-  elements, types text, scrolls, and takes screenshots via Maestro.
-argument-hint: "[goal or test description]"
-allowed-tools: Bash(agent-mobile *), Bash(maestro *), Bash(cat *), Bash(xcrun simctl *), Bash(adb *), Bash(curl -Ls install.maestro.dev *)
+description: Automate mobile apps on iOS simulators and Android emulators using LLM-guided interactions. Use when the user asks to test, validate, interact with, or automate any mobile app running in a simulator or emulator. Works with native iOS, Android, React Native, Flutter, and any framework. Captures accessibility tree snapshots, taps elements, types text, scrolls, and takes screenshots via Maestro.
 ---
 
 # agent-mobile
