@@ -124,7 +124,7 @@ Start before performing actions that might fail. Stop after to inspect errors, n
 4. **Handle missing elements** — If an element isn't visible, scroll first
 5. **Report clearly** — When something fails, show the user the error and current screen state
 6. **Use logs for debugging** — When an action fails unexpectedly, use `logs start` before retrying to capture device logs
-7. **Stop on input failure** — If `type` or `inputText` fails twice on the same field (custom components, OTP inputs, masked fields), **do not keep retrying or inventing workarounds**. Instead: stop, show the user the text that needs to be entered, and ask them to input it manually. Only continue after the user confirms they are done.
+7. **Stop on input failure** — If `type` or `inputText` fails twice on the same field (custom components, OTP inputs, masked fields), **do not keep retrying or inventing workarounds**. Instead: stop and ask the user to enter the value manually on the device. **Never echo the value back** (OTPs, passwords, tokens, card numbers, etc.) — the user already knows what to type. Reference the field by its label or ref (e.g., "please type the OTP into field m3 on the device"), not by its content. Only continue after the user confirms they are done.
 
 ## Additional resources
 
