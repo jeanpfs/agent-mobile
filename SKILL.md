@@ -23,7 +23,7 @@ This checks: Maestro CLI installed, simulator/emulator running, app accessible. 
 
 **Install agent-mobile** (if missing):
 ```bash
-npm install -g github:jeanpfs/agent-mobile
+npm install -g @jeanpfs/agent-mobile
 ```
 
 **Install Maestro** (if missing):
