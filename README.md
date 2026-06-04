@@ -16,10 +16,19 @@ Install the skill with the Vercel Labs skills CLI:
 npx skills@latest add jeanpfs/agent-mobile --all -g
 ```
 
-Install the CLI directly from GitHub:
+Install the CLI from npm:
 
 ```bash
-npm install -g github:jeanpfs/agent-mobile
+npm install -g @jeanpfs/agent-mobile
+```
+
+Or install the latest unreleased version directly from GitHub (requires a local build step, since the published `dist` is not committed):
+
+```bash
+git clone https://github.com/jeanpfs/agent-mobile.git
+cd agent-mobile
+npm install && npm run build
+npm install -g .
 ```
 
 ## Requirements
