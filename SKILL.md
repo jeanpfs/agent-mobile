@@ -26,6 +26,12 @@ This checks: Maestro CLI installed, simulator/emulator running, app accessible. 
 npm install -g @jeanpfs/agent-mobile
 ```
 
+If the npm package is not yet published, install from source (the `dist` is not committed, so a build step is required):
+```bash
+git clone https://github.com/jeanpfs/agent-mobile.git && cd agent-mobile
+npm install && npm run build && npm install -g .
+```
+
 **Install Maestro** (if missing):
 ```bash
 curl -Ls install.maestro.dev | bash
