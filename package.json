@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",
-  "author": "Jean Pierre <jean.pfs2@gmail.com>",
+  "author": "jean.pierre <jean.pfs2@gmail.com>",
   "homepage": "https://github.com/jeanpfs/agent-mobile#readme",
   "repository": {
     "type": "git",
