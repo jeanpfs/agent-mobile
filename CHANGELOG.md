@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-04-19
 
 ### Added
-- Initial public release, published to npm as `@jean.pierre/agent-mobile` (the name of the npm account that owns it).
+- Initial public release, published to npm as `maestro-agent-mobile` (`agent-mobile` and `agent-mobile-cli` belong to other projects). The command is still `agent-mobile`.
 - Commands: `setup`, `snapshot`, `tap`, `type`, `scroll`, `screenshot`, `assert`, `logs`.
 - Accessibility tree snapshot with stable sequential refs (`m1`, `m2`, …) cached at `/tmp/agent-mobile-snapshot.json`.
 - Structured error reporting via `fail({ code, message, suggestion })`.
