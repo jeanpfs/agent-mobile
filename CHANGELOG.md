@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-14
+
+### Changed
+- First release published from CI with provenance (1.0.0 was published by hand under the final package name).
+
 ## [1.0.0] - 2026-04-19
 
 ### Added
@@ -18,5 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - iOS Simulator and Android Emulator support via `xcrun simctl` and `adb`.
 - MIT license, Contributor Covenant 2.1 code of conduct, contributing guide.
 
-[Unreleased]: https://github.com/jeanpfs/agent-mobile/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/jeanpfs/agent-mobile/releases/tag/v1.0.0
+[Unreleased]: https://github.com/jeanpfs/agent-mobile/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/jeanpfs/agent-mobile/releases/tag/v1.0.1
+[1.0.0]: https://www.npmjs.com/package/maestro-agent-mobile/v/1.0.0
