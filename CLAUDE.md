@@ -46,7 +46,7 @@ Error codes in use: `NO_MAESTRO`, `NO_DEVICE`, `INVALID_REF`, `TIMEOUT`, `ASSERT
 
 ## Stack
 
-- TypeScript, Node.js ≥ 18, no runtime dependencies
+- TypeScript, Node.js ≥ 22, no runtime dependencies
 - Build: `tsup` → ESM output with shebang (`#!/usr/bin/env node`)
 - Automation backend: Maestro (must be installed separately)
 - Platform CLIs: `xcrun simctl` (iOS), `adb` (Android)

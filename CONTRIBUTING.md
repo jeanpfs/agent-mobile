@@ -8,7 +8,7 @@ agent-mobile is a thin, deterministic CLI wrapper over [Maestro](https://maestro
 
 ## Prerequisites
 
-- Node.js ≥ 18
+- Node.js ≥ 22
 - pnpm (the project uses `pnpm-lock.yaml`)
 - [Maestro CLI](https://maestro.mobile.dev/) on your `PATH`
 - An iOS Simulator or Android Emulator with a sample app running, if you want to test end-to-end

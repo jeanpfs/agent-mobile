@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jeanpfs/agent-mobile/actions/workflows/ci.yml/badge.svg)](https://github.com/jeanpfs/agent-mobile/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Node >= 18](https://img.shields.io/badge/node-%3E%3D18-43853d.svg)](https://nodejs.org/)
+[![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-43853d.svg)](https://nodejs.org/)
 
 AI agent skill for automating mobile apps on iOS simulators and Android emulators via [Maestro](https://maestro.mobile.dev/).
 
@@ -33,7 +33,7 @@ npm install -g .
 
 ## Requirements
 
-- **Node.js** >= 18
+- **Node.js** >= 22
 - **Maestro CLI** — mobile UI automation framework
 - **iOS Simulator** or **Android Emulator** with a running app
 
