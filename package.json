@@ -1,5 +1,5 @@
 {
-  "name": "@jeanpfs/agent-mobile",
+  "name": "@jean.pierre/agent-mobile",
   "version": "1.0.0",
   "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",

@@ -19,7 +19,7 @@ npx skills@latest add jeanpfs/agent-mobile --all -g
 Install the CLI from npm:
 
 ```bash
-npm install -g @jeanpfs/agent-mobile
+npm install -g @jean.pierre/agent-mobile
 ```
 
 Or install the latest unreleased version directly from GitHub (requires a local build step, since the published `dist` is not committed):
