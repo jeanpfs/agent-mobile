@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Minimum supported Node.js is now 22 (`engines.node` `>=22`); CI tests on Node 22 and 24.
+
 ## [1.0.1] - 2026-10-14
 
 ### Changed
