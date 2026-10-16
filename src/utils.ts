@@ -168,14 +168,18 @@ function isVisible(node: HierarchyNode): boolean {
 }
 
 function flattenTree(node: HierarchyNode, depth: number, elements: ParsedElement[], counter: { value: number }): void {
-  if (!isVisible(node)) return
+  const visible = isVisible(node)
+  // The root is only a container. iOS reports it with zero bounds and enabled=false, and pruning it would drop the whole tree.
+  if (!visible && depth > 0) return
 
-  const role = normalizeRole(node)
-  const label = getLabel(node)
+  if (visible) {
+    const role = normalizeRole(node)
+    const label = getLabel(node)
 
-  if (role && label) {
-    counter.value++
-    elements.push({ role, label, ref: `m${counter.value}`, depth, node })
+    if (role && label) {
+      counter.value++
+      elements.push({ role, label, ref: `m${counter.value}`, depth, node })
+    }
   }
 
   if (node.children) {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { escapeYamlString, parseArgs } from "../utils.js"
+import { escapeYamlString, parseArgs, parseHierarchy } from "../utils.js"
 
 describe("escapeYamlString", () => {
   it("escapes backslash before quotes to avoid double-escape collision", () => {
@@ -59,5 +59,31 @@ describe("parseArgs", () => {
     expect(r._1).toBe("hello world")
     expect(r.platform).toBe("ios")
     expect(r._count).toBe("2")
+  })
+})
+
+describe("parseHierarchy", () => {
+  const button = (label: string, extra: Record<string, string> = {}) => ({
+    attributes: { text: label, clickable: "true", bounds: "[0,0][100,40]", ...extra },
+  })
+
+  it("keeps the children of a root that has zero bounds and enabled=false (iOS)", () => {
+    const tree = {
+      attributes: { bounds: "[0,0][0,0]", enabled: "false" },
+      children: [button("Display & Brightness"), button("General")],
+    }
+    expect(parseHierarchy(tree).map((e) => e.label)).toEqual(["Display & Brightness", "General"])
+  })
+
+  it("still prunes an invisible subtree below the root", () => {
+    const tree = {
+      attributes: { bounds: "[0,0][390,844]" },
+      children: [
+        { attributes: { visible: "false" }, children: [button("Hidden")] },
+        { attributes: { bounds: "[0,0][0,0]" }, children: [button("Collapsed")] },
+        button("Shown"),
+      ],
+    }
+    expect(parseHierarchy(tree).map((e) => e.label)).toEqual(["Shown"])
   })
 })
