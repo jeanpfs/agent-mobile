@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-10-16
+
+### Changed
+- The per-command Maestro timeout is now 120 seconds (was 30) and can be set with `AGENT_MOBILE_TIMEOUT_MS`. `maestro hierarchy` and `maestro test` take 12 to 40 seconds on a cold iOS simulator, so the old limit made commands fail with `ETIMEDOUT`.
+
 ## [1.0.3] - 2026-10-16
 
 ### Fixed
 - `snapshot` returned no elements on iOS. The iOS hierarchy root has zero bounds and `enabled=false`, and the visibility filter pruned the whole tree at that root. The root is now always traversed; invisible subtrees below it are still skipped.
-
-### Changed
-- The per-command Maestro timeout is now 120 seconds (was 30) and can be set with `AGENT_MOBILE_TIMEOUT_MS`. `maestro hierarchy` and `maestro test` take 12 to 40 seconds on a cold iOS simulator, so the old limit made commands fail with `ETIMEDOUT`.
 
 ## [1.0.2] - 2026-10-16
 
