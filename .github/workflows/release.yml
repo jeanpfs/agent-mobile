@@ -33,9 +33,18 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: GitHub release from CHANGELOG
         run: |
-          v="${GITHUB_REF_NAME#v}"
-          awk -v v="$v" '$0 ~ "^## \\["v"\\]" {f=1; next} /^## / {f=0} f' CHANGELOG.md | grep -v '^\[' > notes.md
-          [ -s notes.md ] || { echo "no CHANGELOG section for $v"; exit 1; }
-          gh release create "${GITHUB_REF_NAME}" --title "${GITHUB_REF_NAME}" --notes-file notes.md
+          tag="${GITHUB_REF_NAME}"
+          export V="${tag#v}"
+          awk '/^## /{f=(index($0,"## ["ENVIRON["V"]"]")==1||index($0,"## "ENVIRON["V"]" ")==1);next} f' CHANGELOG.md | grep -v '^\[' > notes.md
+          if [ -s notes.md ]; then
+            if gh release view "$tag" >/dev/null 2>&1; then
+              gh release edit "$tag" --title "$tag" --notes-file notes.md
+            else
+              gh release create "$tag" --title "$tag" --notes-file notes.md
+            fi
+          else
+            echo "no CHANGELOG section for $V, falling back to generated notes"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --generate-notes
+          fi
         env:
           GH_TOKEN: ${{ github.token }}

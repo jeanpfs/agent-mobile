@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-10-16
+
 ### Changed
 - Minimum supported Node.js is now 22 (`engines.node` `>=22`); CI tests on Node 22 and 24.
+- Contributor guide for coding agents is now `AGENTS.md` (was `CLAUDE.md`).
+- The release workflow extracts notes from this changelog and updates an existing GitHub release instead of failing.
+
+### Security
+- Cleared Dependabot security alerts in development dependencies.
 
 ## [1.0.1] - 2026-10-14
 
@@ -26,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - iOS Simulator and Android Emulator support via `xcrun simctl` and `adb`.
 - MIT license, Contributor Covenant 2.1 code of conduct, contributing guide.
 
-[Unreleased]: https://github.com/jeanpfs/agent-mobile/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/jeanpfs/agent-mobile/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/jeanpfs/agent-mobile/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/jeanpfs/agent-mobile/releases/tag/v1.0.1
 [1.0.0]: https://www.npmjs.com/package/maestro-agent-mobile/v/1.0.0

@@ -1,6 +1,6 @@
 {
   "name": "maestro-agent-mobile",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Mobile app automation CLI for AI agents — works with any app on iOS Simulator or Android Emulator via Maestro",
   "license": "MIT",
   "author": "jean.pierre <jean.pfs2@gmail.com>",
