@@ -96,7 +96,7 @@ The `logs` command captures device logs over a time period using platform-native
 - Animations may cause transient states. Wait 1-2 seconds before snapshot.
 
 ### Maestro timeout
-- Default timeout is 30 seconds
+- Default timeout is 120 seconds per Maestro command; set `AGENT_MOBILE_TIMEOUT_MS` (milliseconds) to change it
 - Heavy apps may need more time on first launch
 - Ensure the emulator has enough RAM allocated
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { escapeYamlString, parseArgs, parseHierarchy } from "../utils.js"
+import { commandTimeoutMs, escapeYamlString, parseArgs, parseHierarchy } from "../utils.js"
 
 describe("escapeYamlString", () => {
   it("escapes backslash before quotes to avoid double-escape collision", () => {
@@ -85,5 +85,21 @@ describe("parseHierarchy", () => {
       ],
     }
     expect(parseHierarchy(tree).map((e) => e.label)).toEqual(["Shown"])
+  })
+})
+
+describe("commandTimeoutMs", () => {
+  it("defaults to 120 seconds", () => {
+    expect(commandTimeoutMs({})).toBe(120_000)
+  })
+
+  it("reads AGENT_MOBILE_TIMEOUT_MS", () => {
+    expect(commandTimeoutMs({ AGENT_MOBILE_TIMEOUT_MS: "45000" })).toBe(45_000)
+  })
+
+  it("ignores values that are not positive numbers", () => {
+    expect(commandTimeoutMs({ AGENT_MOBILE_TIMEOUT_MS: "abc" })).toBe(120_000)
+    expect(commandTimeoutMs({ AGENT_MOBILE_TIMEOUT_MS: "0" })).toBe(120_000)
+    expect(commandTimeoutMs({ AGENT_MOBILE_TIMEOUT_MS: "-5" })).toBe(120_000)
   })
 })

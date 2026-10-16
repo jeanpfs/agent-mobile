@@ -21,11 +21,19 @@ export function succeed(message: string): void {
   console.log(`OK: ${message}`)
 }
 
+const DEFAULT_TIMEOUT_MS = 120_000
+
+/** Per-command timeout in ms. `maestro hierarchy` and `maestro test` can take 12-40 s on a cold iOS simulator. */
+export function commandTimeoutMs(env: NodeJS.ProcessEnv = process.env): number {
+  const value = Number(env.AGENT_MOBILE_TIMEOUT_MS)
+  return Number.isFinite(value) && value > 0 ? value : DEFAULT_TIMEOUT_MS
+}
+
 export function runCommand(cmd: string, options?: ExecSyncOptions): string {
   try {
     const result = execSync(cmd, {
       encoding: "utf-8",
-      timeout: 30_000,
+      timeout: commandTimeoutMs(),
       maxBuffer: 10 * 1024 * 1024,
       ...options,
     })
