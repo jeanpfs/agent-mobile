@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Docs
+- README demo GIF: a real Claude Code session driving the iOS simulator through the skill, with the scripts that record it in `scripts/demo/`.
+
 ## [1.0.4] - 2026-10-16
 
 ### Changed

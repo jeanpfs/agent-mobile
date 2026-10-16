@@ -4,6 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-43853d.svg)](https://nodejs.org/)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jeanpfs/agent-mobile/main/assets/demo.gif" alt="Claude Code opening iOS Settings and switching to Dark through the agent-mobile skill" width="900">
+</p>
+
 AI agent skill for automating mobile apps on iOS simulators and Android emulators via [Maestro](https://maestro.mobile.dev/).
 
 Works with any framework: native iOS/Android, React Native, Flutter, etc.
