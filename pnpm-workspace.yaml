@@ -1,0 +1,5 @@
+allowBuilds:
+  esbuild: true
+overrides:
+  picomatch@<4.0.4: '>=4.0.4'
+  esbuild@<0.28.1: '>=0.28.1'
